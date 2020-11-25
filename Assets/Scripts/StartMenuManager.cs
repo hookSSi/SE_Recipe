@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using TMPro;
 
@@ -14,6 +15,12 @@ public class ResponseData
     {
         this.state = state;
         this.desc = desc;
+    }
+
+    public bool stated()
+    {
+        Debug.Log(state);
+        return state;
     }
 }
 
@@ -99,6 +106,13 @@ public class StartMenuManager : MonoBehaviour
         {
             string jsonStr = www.downloadHandler.text;
             ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
+            
+            if(data.stated() == true)
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+            
+            Debug.Log("ok");
             Debug.Log(jsonStr);
         }
     }
