@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,32 @@ public class StartMenuManager : MonoBehaviour
     public TMP_InputField _registerPWInput;
     public TMP_InputField _registerEmailInput;
 
+    void Start()
+    {
+        // 모든 ID 입력은 소문자로만
+        // 특수문자, 공백 처리, 영어외 언어 처리
+        _loginIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+			return changeLowerCase (addedChar);
+		};
+        _loginIDInput.onValueChanged.AddListener(delegate { _loginIDInput.text = CleanIDInput(_loginIDInput.text); });
+
+        _registerIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+			return changeLowerCase (addedChar);
+		};
+        _registerIDInput.onValueChanged.AddListener(delegate { _registerIDInput.text = CleanIDInput(_registerIDInput.text); });
+
+        // 모든 Email 입력은 소문자로만
+        // 특수문자, 공백 처리, 영어외 언어 처리
+        _registerEmailInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+			return changeLowerCase (addedChar);
+		};
+        _registerEmailInput.onValueChanged.AddListener(delegate { _registerEmailInput.text = CleanEmailInput(_registerEmailInput.text); });
+
+        // 패스워드의 공백 처리, 영어외 언어 처리
+        _loginPWInput.onValueChanged.AddListener(delegate { _loginPWInput.text = CleanPasswordInput(_loginPWInput.text); });
+        _registerPWInput.onValueChanged.AddListener(delegate { _registerPWInput.text = CleanPasswordInput(_registerPWInput.text); });
+    }
+
     /// 회원가입
     IEnumerator Register(string username, string password, string email)
     {
@@ -78,6 +105,12 @@ public class StartMenuManager : MonoBehaviour
 
     public void Register()
     {
+        // 4자 이상 입력했는지 확인
+        if(_registerIDInput.text.Length < 4 || _registerPWInput.text.Length < 4 || _registerEmailInput.text.Length < 4)
+        {
+            return;
+        }
+
         var registerID = _registerIDInput.text;
         var registerPW = _registerPWInput.text;
         var registerEmail = _registerEmailInput.text + "@naver.com";
@@ -132,5 +165,57 @@ public class StartMenuManager : MonoBehaviour
         #else
             Application.Quit() // 어플리케이션 종료
         #endif
+    }
+
+    char changeLowerCase(char _cha)
+	{
+		char tmpChar = _cha;
+
+		string tmpString = tmpChar.ToString();
+
+		tmpString = tmpString.ToLower ();
+
+		tmpChar = System.Convert.ToChar (tmpString);
+
+		return tmpChar;
+	}
+
+    string CleanIDInput(string str)
+    {
+        try 
+        {
+           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
+                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+        }
+        catch (RegexMatchTimeoutException) 
+        {
+           return String.Empty;
+        }
+    }
+
+    string CleanEmailInput(string str)
+    {
+        try 
+        {
+           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
+                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+        }
+        catch (RegexMatchTimeoutException) 
+        {
+           return String.Empty;
+        }
+    }
+
+    string CleanPasswordInput(string str)
+    {
+        try 
+        {
+           return Regex.Replace(str, @"[^a-zA-Z0-9~`!@#$%^&*()_\-+={}[\]|\\;:'""<>,.?/]", "",
+                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+        }
+        catch (RegexMatchTimeoutException) 
+        {
+           return String.Empty;
+        }
     }
 }
