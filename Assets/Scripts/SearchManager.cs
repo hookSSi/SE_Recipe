@@ -12,20 +12,19 @@ public class SearchManager : MonoBehaviour
     public string _loadUrl;
     public TMP_InputField KeywordInput;
     public Dropdown OptionInput;
-
     public TMP_Text Result;
-
     public GameObject Printing;
-
     public TMP_Text lookupText;
 
     public TMP_Text recipeIDInput;
     string[] ar;
-    List<RecipeInfo> list = new List<RecipeInfo>();
     public GameObject prefabButton;
     public RectTransform ParentPanel;
-    public GameObject prefabtext;
+    public TMP_Text prefabtext;
+    public GameObject preRecipe;
 
+    public GameObject content;
+    RecipeInfo[] list;
 
     // a List of Dropdown options (building name)
     IEnumerator print(string search_Keyword, string search_Option)
@@ -46,48 +45,16 @@ public class SearchManager : MonoBehaviour
         else
         {
             string jsonStr = www.downloadHandler.text;
-            Debug.Log(jsonStr);
-            string[] strar = jsonStr.Split(new string[] { "}" }, StringSplitOptions.None);
 
-            Debug.Log(strar.Length);
+            list = JsonHelper.FromJson<RecipeInfo>(jsonStr);
 
-            for(int i = 0; i< strar.Length - 1; i++)
+            for(int i = 0; i < list.Length - 1; i++)
             {
-                string[] aar =  strar[i].Split(new string[] { "\"" }, StringSplitOptions.None);
-
-                list.Add(new RecipeInfo(aar[3],aar[7],aar[11],aar[15],aar[19],aar[23]));
-
-                list[i].RECIPE_ID = aar[3];
-                list[i].RECIPE_NM_KO = aar[7];
-                list[i].SUMRY = aar[11];
-                list[i].TY_NM = aar[15];
-                list[i].LEVEL_NM = aar[19];
-                list[i].IMG_URL = aar[23];
-
-                Result.text += list[i].RECIPE_NM_KO + "\n";
-                Printing.SetActive(true);
-            
+                GameObject recipeObject = (GameObject)Instantiate(preRecipe);
+                recipeObject.GetComponent<SelectManager>().setID(list[i].RECIPE_ID);
+                recipeObject.transform.position = new Vector3(1200, 250 - i * 40, 1);
+                recipeObject.transform.parent = content.transform;
             }
-                //prefabtext
-            for(int i = 0; i < strar.Length - 1; i++)
-            {
-                /*GameObject instText = (GameObject)Instantiate(prefabtext);
-                instText.transform.SetParent(ParentPanel, false);
-                instText.transform.localScale = new Vector3(1, 1 , 1);
-            
-                instText.transform.position = new Vector3(0, -50 * i, 1);*/
-
-                GameObject goButton = (GameObject)Instantiate(prefabButton);
-                goButton.transform.SetParent(ParentPanel, false);
-                goButton.transform.localScale = new Vector3(1, 1 , 1);
-                goButton.transform.position = new Vector3 (Result.transform.position.x + 150, Result.transform.position.y - i * 50, 1);
-                
-
-                Button tempButton = goButton.GetComponent<Button>();
-                int tempInt = i;
-           
-            }
-
         }
     }
 
@@ -109,8 +76,6 @@ public class SearchManager : MonoBehaviour
         }
 
     }
-
-
     IEnumerator lookupInfo(int recipeID)
     {
         WWWForm form = new WWWForm();
