@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 048c9fdc7515a994193d2797907613d8
   - enabled: 1
-    path: Assets/Scenes/SearchRecipe.unity
+    path: Assets/Scenes/SearchManager.unity
     guid: 282c8d8a8598b7c43859d161aa17ff51
   - enabled: 1
     path: Assets/Scenes/Login.unity
