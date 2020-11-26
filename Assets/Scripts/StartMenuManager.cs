@@ -144,8 +144,6 @@ public class StartMenuManager : MonoBehaviour
             {
                 SceneManager.LoadScene("MainMenu");
             }
-            
-            Debug.Log("ok");
             Debug.Log(jsonStr);
         }
     }

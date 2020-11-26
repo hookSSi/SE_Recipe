@@ -5,8 +5,8 @@
    ini_set("display_errors", 1);
    require 'RecipeManager.php';
 
-   $search_keyword = $_GET['searchKeyword'];
-   $search_option = $_GET['searchOption'];
+   $search_keyword = $_POST['searchKeyword'];
+   $search_option = $_POST['searchOption'];
 
    $recipeManager= new RecipeManager();
 
