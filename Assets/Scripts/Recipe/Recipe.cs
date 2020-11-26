@@ -26,19 +26,54 @@ public class RecipeInfo
     }
 }
 
+[Serializable]
+public class IngredientInfo
+{
+    public string RECIPE_ID;
+    public string IRDNT_NM;
+    public string IRDNT_CPCTY;
+}
+
+[Serializable]
+public class CookingProcessInfo
+{
+    public string RECIPE_ID;
+    public string COOKING_NO;
+    public string COOKING_DC;
+    public string STRE_STEP_IMAGE_URL;
+}
+
+[Serializable]
+public class RecipeDetailedInfo
+{
+    public RecipeInfo RECIPE;
+    public IngredientInfo[] INGREDIENT;
+    public CookingProcessInfo[] PROCESS;
+}
+
 public class Recipe : MonoBehaviour
 {
     public RawImage _recipeImage; // 섬네일 UI
     public TMP_Text _descUI; // 간단한 설명 UI
     public TMP_Text _recipeNameUI; // 레시피 이름
     protected RecipeInfo _info;
+    protected RecipeDetailedInfoLoader _loader; // 디테일 창
+    protected HistoryManager _historyManager;
+    private bool _isActive = false;
 
     public string _loadRecipeInfoUrl = "hook.iptime.org:1080/loadRecipeInfo.php";
+    public string _loadRecipeDetailInfoUrl = "hook.iptime.org:1080/loadRecipeDetailInfo.php";
 
     // 초기화
     public void Init(string recipeID)
     {
         StartCoroutine(LoadRecipeInfo(recipeID));
+    }
+
+    public void Link(HistoryManager historyManager, RecipeDetailedInfoLoader loader)
+    {
+        _loader = loader;
+        _historyManager = historyManager;
     }
 
     /// URL 이미지 로드
@@ -60,9 +95,41 @@ public class Recipe : MonoBehaviour
     }
 
     // 레시피의 상세한 설명
-    public void LoadRecipeDetail(string recipeID)
+    public void LoadRecipeDetailInfo()
     {
-        
+        if(_isActive && _loader != null)
+        {
+            StartCoroutine(LoadRecipeDetailInfo(_info.RECIPE_ID));
+            Debug.Log("자세한 정보 불러오기");
+        }
+    }
+
+    protected IEnumerator LoadRecipeDetailInfo(string recipeID)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("recipeID", recipeID);
+
+        UnityWebRequest www = UnityWebRequest.Post(_loadRecipeDetailInfoUrl, form);
+
+        www.timeout = 10; // 타임아웃 10초
+        yield return www.SendWebRequest();
+
+        if(www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            string jsonStr = www.downloadHandler.text;
+            Debug.Log(jsonStr);
+
+            if(jsonStr != "결과가 없습니다.")
+            {
+                RecipeDetailedInfo detailedInfo = JsonUtility.FromJson<RecipeDetailedInfo>(jsonStr);
+                _loader.gameObject.SetActive(true);
+                _loader.LoadRecipe(detailedInfo);
+            }
+        }
     }
 
     /// 레시피 정보 불러오기
@@ -98,5 +165,8 @@ public class Recipe : MonoBehaviour
         _recipeNameUI.text = this._info.RECIPE_NM_KO;
         // 간단한 설명 로드
         _descUI.text = this._info.SUMRY;
+
+        // 레시피 활성화
+        _isActive = true;
     }
 }

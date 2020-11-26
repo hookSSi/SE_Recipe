@@ -26,31 +26,7 @@ public class HistoryManager : MonoBehaviour
 
     public TMP_Text _errorMessage;
 
-    public static HistoryManager Instance
-    {
-        get
-        {
-            if(null == instance)
-            {
-                instance = new HistoryManager();
-            }
-            return instance;
-        }
-    }
-
-    void Awake()
-    {
-        if(null == instance)
-        {
-            instance = this;
-
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }   
-    }
+    public RecipeDetailedInfoLoader _recipeDetailLoader;
 
     void Start()
     {
@@ -123,11 +99,15 @@ public class HistoryManager : MonoBehaviour
             {
                 HistoryData[] dataList = JsonHelper.FromJson<HistoryData>(jsonStr);
 
-                foreach(var data in dataList)
+                if(_recipePref != null)
                 {
-                    GameObject obj = Instantiate(_recipePref);
-                    obj.GetComponent<RecipeHistory>().Init(data.RECIPE_ID.ToString());
-                    obj.transform.SetParent(_contentHolder);
+                    foreach(var data in dataList)
+                    {
+                        GameObject obj = Instantiate(_recipePref);
+                        obj.GetComponent<RecipeHistory>().Init(data.RECIPE_ID.ToString());
+                        obj.GetComponent<RecipeHistory>().Link(this, _recipeDetailLoader);
+                        obj.transform.SetParent(_contentHolder);
+                    }
                 }
             }
             else

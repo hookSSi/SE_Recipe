@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 78767023}
   - component: {fileID: 78767022}
   - component: {fileID: 78767021}
+  - component: {fileID: 78767024}
   m_Layer: 5
   m_Name: "\uB85C\uADF8\uC544\uC6C3"
   m_TagString: Untagged
@@ -337,8 +338,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1127875543}
-        m_MethodName: LogOut
+      - m_Target: {fileID: 78767024}
+        m_MethodName: DoLogOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -385,6 +386,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78767019}
   m_CullTransparentMesh: 0
+--- !u!114 &78767024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78767019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf8249d1720c3547b19e1b206874e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &273263425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1016,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

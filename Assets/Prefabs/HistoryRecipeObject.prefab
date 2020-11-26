@@ -325,6 +325,7 @@ MonoBehaviour:
   _descUI: {fileID: 7114544724483177032}
   _recipeNameUI: {fileID: 8518772981185185837}
   _loadRecipeInfoUrl: hook.iptime.org:1080/loadRecipeInfo.php
+  _loadRecipeDetailInfoUrl: hook.iptime.org:1080/loadRecipeDetailInfo.php
 --- !u!1 &7114544724710429647
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +443,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7114544724710429644}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1134781098130173861}
+        m_MethodName: LoadRecipeDetailInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7114544725729778838
 GameObject:
   m_ObjectHideFlags: 0

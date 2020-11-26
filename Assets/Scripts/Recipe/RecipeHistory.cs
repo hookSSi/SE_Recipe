@@ -9,7 +9,7 @@ public class RecipeHistory : Recipe
         string userID = UserManager.Instance.GetId();
         string recipeID = this._info.RECIPE_ID;
 
-        StartCoroutine(HistoryManager.Instance.RemoveRecipe(userID, recipeID));
+        StartCoroutine(_historyManager.RemoveRecipe(userID, recipeID));
         Destroy(this.gameObject);
     }
 }
