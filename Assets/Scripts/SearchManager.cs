@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Converters;
 
 public class SearchManager : MonoBehaviour
 {
@@ -26,26 +21,13 @@ public class SearchManager : MonoBehaviour
 
     public TMP_Text recipeIDInput;
     string[] ar;
-    List<Information> list = new List<Information>();
+    List<RecipeInfo> list = new List<RecipeInfo>();
     public GameObject prefabButton;
     public RectTransform ParentPanel;
     public GameObject prefabtext;
 
 
     // a List of Dropdown options (building name)
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator print(string search_Keyword, string search_Option)
     {
         WWWForm form = new WWWForm();
@@ -73,7 +55,7 @@ public class SearchManager : MonoBehaviour
             {
                 string[] aar =  strar[i].Split(new string[] { "\"" }, StringSplitOptions.None);
 
-                list.Add(new Information(aar[3],aar[7],aar[11],aar[15],aar[19],aar[23]));
+                list.Add(new RecipeInfo(aar[3],aar[7],aar[11],aar[15],aar[19],aar[23]));
 
                 list[i].RECIPE_ID = aar[3];
                 list[i].RECIPE_NM_KO = aar[7];
@@ -159,23 +141,4 @@ public class SearchManager : MonoBehaviour
     {
 
     }
-}
-public class Information
-{
-    public Information(string a, string b, string c, string d, string e, string f)
-    {
-        RECIPE_ID = a;
-        RECIPE_NM_KO = b;
-        SUMRY = c;
-        TY_NM = d;
-        LEVEL_NM = e;
-        IMG_URL = f;
-    }
-
-    public string RECIPE_ID{get; set;} 
-    public string RECIPE_NM_KO{get; set;}
-    public string SUMRY{get; set;}
-    public string TY_NM{get; set;}
-    public string LEVEL_NM{get; set;} 
-    public string IMG_URL{get; set;}
 }
