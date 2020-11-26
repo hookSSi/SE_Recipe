@@ -142,6 +142,7 @@ public class StartMenuManager : MonoBehaviour
             
             if(data.stated() == true)
             {
+                UserManager.Instance.Login(username);
                 SceneManager.LoadScene("MainMenu");
             }
             Debug.Log(jsonStr);

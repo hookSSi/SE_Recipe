@@ -305,6 +305,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &82168409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82168411}
+  - component: {fileID: 82168410}
+  m_Layer: 0
+  m_Name: UserManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &82168410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82168409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9af45d4b87f84d4aa01973e5d5d13c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _userId: 
+  _loginState: 0
+--- !u!4 &82168411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82168409}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1194.6729, y: 561.40643, z: -728.6661}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254129516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,7 +1721,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715632019}
+      - m_Target: {fileID: 1817380301}
         m_MethodName: OpenRegisterForm
         m_Mode: 1
         m_Arguments:
@@ -2095,7 +2140,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715632019}
+      - m_Target: {fileID: 1817380301}
         m_MethodName: CloseRegisterForm
         m_Mode: 1
         m_Arguments:
@@ -2408,7 +2453,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715632019}
+      - m_Target: {fileID: 1817380301}
         m_MethodName: Register
         m_Mode: 1
         m_Arguments:
@@ -4193,7 +4238,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715632019}
+      - m_Target: {fileID: 1817380301}
         m_MethodName: Login
         m_Mode: 1
         m_Arguments:
@@ -4253,7 +4298,6 @@ GameObject:
   - component: {fileID: 1715632017}
   - component: {fileID: 1715632016}
   - component: {fileID: 1715632015}
-  - component: {fileID: 1715632019}
   m_Layer: 5
   m_Name: "\uC2DC\uC791 \uBA54\uB274"
   m_TagString: Untagged
@@ -4348,26 +4392,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1715632019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715632014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd03d17be70fce499e51e199ff9bd50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loginUrl: http://hook.iptime.org:1080/login.php
-  _registerUrl: http://hook.iptime.org:1080/register.php
-  _registerForm: {fileID: 1374493618}
-  _loginIDInput: {fileID: 1921531987}
-  _loginPWInput: {fileID: 334768791}
-  _registerIDInput: {fileID: 1582179685}
-  _registerPWInput: {fileID: 1447454343}
-  _registerEmailInput: {fileID: 1954965077}
 --- !u!1 &1814634567
 GameObject:
   m_ObjectHideFlags: 0
@@ -4522,6 +4546,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814634567}
   m_CullTransparentMesh: 0
+--- !u!1 &1817380300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817380302}
+  - component: {fileID: 1817380301}
+  m_Layer: 0
+  m_Name: StartMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1817380301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817380300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd03d17be70fce499e51e199ff9bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loginUrl: http://hook.iptime.org:1080/login.php
+  _registerUrl: http://hook.iptime.org:1080/register.php
+  _registerForm: {fileID: 1374493618}
+  _loginIDInput: {fileID: 1921531987}
+  _loginPWInput: {fileID: 334768791}
+  _registerIDInput: {fileID: 1582179685}
+  _registerPWInput: {fileID: 1447454343}
+  _registerEmailInput: {fileID: 1954965077}
+--- !u!4 &1817380302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817380300}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1194.6729, y: 561.40643, z: -728.6661}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1921531985
 GameObject:
   m_ObjectHideFlags: 0
@@ -5136,7 +5211,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1715632019}
+      - m_Target: {fileID: 1817380301}
         m_MethodName: ExitProgram
         m_Mode: 1
         m_Arguments:

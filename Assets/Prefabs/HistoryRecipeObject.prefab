@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7114544724493650343}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A1\uCC44\uBC25"
+  m_text: "\uB808\uC2DC\uD53C \uC774\uB984 \uB85C\uB529\uC911"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a5540c0ba8ea9b4e8be0663724298e2, type: 2}
   m_sharedMaterial: {fileID: 8543454374018117401, guid: 0a5540c0ba8ea9b4e8be0663724298e2,
@@ -164,7 +164,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7114544724493650343}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -198,12 +198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A1\uCC44\uBC25 \uD55C \uADF8\uB987\uC774\uBA74 \uC624\uB298 \uC800\uB141
-    \uB05D! \uC785 \uB9DB \uC5C6\uC744 \uB54C \uBA39\uC73C\uBA74 \uADF8\uB9CC\uC774\uC9C0\uC694~\n\uC7A1\uCC44\uBC25
-    \uD55C \uADF8\uB987\uC774\uBA74 \uC624\uB298 \uC800\uB141 \uB05D! \uC785 \uB9DB
-    \uC5C6\uC744 \uB54C \uBA39\uC73C\uBA74 \uADF8\uB9CC\uC774\uC9C0\uC694~\n\uC7A1\uCC44\uBC25
-    \uD55C \uADF8\uB987\uC774\uBA74 \uC624\uB298 \uC800\uB141 \uB05D! \uC785 \uB9DB
-    \uC5C6\uC744 \uB54C \uBA39\uC73C\uBA74 \uADF8\uB9CC\uC774\uC9C0\uC694~"
+  m_text: "\uB808\uC2DC\uD53C \uAC04\uB7B5 \uC18C\uAC1C \uB85C\uB529\uC911..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0a5540c0ba8ea9b4e8be0663724298e2, type: 2}
   m_sharedMaterial: {fileID: 8543454374018117401, guid: 0a5540c0ba8ea9b4e8be0663724298e2,
@@ -282,10 +277,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7114544724493650343}
-  - component: {fileID: 7114544724493650341}
-  - component: {fileID: 7114544724493650342}
+  - component: {fileID: 1134781098130173861}
   m_Layer: 5
-  m_Name: RecipeObject
+  m_Name: HistoryRecipeObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,10 +297,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7114544724710429646}
-  - {fileID: 7114544724483177033}
   - {fileID: 7114544725729778837}
   - {fileID: 7114544726585705408}
   - {fileID: 4449272409494220384}
+  - {fileID: 7114544724483177033}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -315,7 +309,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7114544724493650341
+--- !u!114 &1134781098130173861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -324,30 +318,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7114544724493650336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e82d83956f883194ba001b68922ace90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _recipeImage: {fileID: 0}
-  _descUI: {fileID: 0}
-  _recipeNameUI: {fileID: 0}
-  _loadRecipeInfoUrl: hook.iptime.org:1080/loadRecipeInfo.php
---- !u!114 &7114544724493650342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7114544724493650336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00699a43ff8f61e43970168ccf917630, type: 3}
+  m_Script: {fileID: 11500000, guid: 12a81b4c6e9ae774fad7fb23372eada8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _recipeImage: {fileID: 7114544726585705415}
   _descUI: {fileID: 7114544724483177032}
   _recipeNameUI: {fileID: 8518772981185185837}
   _loadRecipeInfoUrl: hook.iptime.org:1080/loadRecipeInfo.php
-  _recipeID: 1
 --- !u!1 &7114544724710429647
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +475,7 @@ RectTransform:
   m_Children:
   - {fileID: 7114544726216334285}
   m_Father: {fileID: 7114544724493650343}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -584,7 +561,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7114544725729778843}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1134781098130173861}
+        m_MethodName: RemoveHistory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7114544726216334286
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +737,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7114544724493650343}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
