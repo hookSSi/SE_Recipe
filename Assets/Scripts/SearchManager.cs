@@ -54,6 +54,9 @@ public class SearchManager : MonoBehaviour
                 recipeObject.GetComponent<SelectManager>().setID(list[i].RECIPE_ID);
                 recipeObject.transform.position = new Vector3(1200, 250 - i * 40, 1);
                 recipeObject.transform.parent = content.transform;
+                //recipeObject.GetComponentInChildren<TMP_Text>().text = list[i].RECIPE_NM_KO;
+                recipeObject.transform.GetChild(0).GetComponentInChildren<Text>().text = list[i].RECIPE_NM_KO;
+
             }
         }
     }

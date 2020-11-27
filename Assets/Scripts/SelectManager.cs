@@ -17,7 +17,7 @@ public class SelectManager : MonoBehaviour
 
     void Start()
     {
-
+        
     }
     
     public void SelectRecipe()
@@ -30,13 +30,13 @@ public class SelectManager : MonoBehaviour
         Debug.Log("전" + recipe_ID);
         WWWForm form = new WWWForm();
 
-        form.AddField("recipeID", recipe_ID);
+        form.AddField("recipeID", int.Parse(recipe_ID));
 
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(selectURL);
 
         www.timeout = 10; // 타임아웃 10초
         yield return www.SendWebRequest();
-        
+
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);

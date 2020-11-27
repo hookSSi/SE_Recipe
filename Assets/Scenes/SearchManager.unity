@@ -1039,15 +1039,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3334,7 +3334,7 @@ MonoBehaviour:
   recipeIDInput: {fileID: 0}
   prefabButton: {fileID: 2143591873}
   ParentPanel: {fileID: 1289963975}
-  prefabtext: {fileID: 2143591872}
+  prefabtext: {fileID: 0}
   preRecipe: {fileID: 991172186914019802, guid: 4fe2ac51205653748ac1507c44a24b33,
     type: 3}
   content: {fileID: 1289963974}
@@ -4005,12 +4005,12 @@ PrefabInstance:
     - target: {fileID: 991172186914019803, guid: 4fe2ac51205653748ac1507c44a24b33,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 541
+      value: 539
       objectReference: {fileID: 0}
     - target: {fileID: 991172186914019803, guid: 4fe2ac51205653748ac1507c44a24b33,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -367
+      value: -587
       objectReference: {fileID: 0}
     - target: {fileID: 991172186914019803, guid: 4fe2ac51205653748ac1507c44a24b33,
         type: 3}
@@ -4057,6 +4057,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 991172187363521624, guid: 4fe2ac51205653748ac1507c44a24b33,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 991172187363521624, guid: 4fe2ac51205653748ac1507c44a24b33,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fe2ac51205653748ac1507c44a24b33, type: 3}
 --- !u!4 &2143591871 stripped
@@ -4065,18 +4075,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2143591870}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2143591872 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 991172186739965965, guid: 4fe2ac51205653748ac1507c44a24b33,
-    type: 3}
-  m_PrefabInstance: {fileID: 2143591870}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2143591873 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 991172187474527899, guid: 4fe2ac51205653748ac1507c44a24b33,
