@@ -36,6 +36,11 @@ public class HistoryManager : MonoBehaviour
         }
     }
 
+    public void SaveRecipe(string recipeID)
+    {
+        StartCoroutine(SaveRecipe(UserManager.Instance.GetId(), recipeID));
+    }
+
     protected IEnumerator SaveRecipe(string userID, string recipeID)
     {
         WWWForm form = new WWWForm();
@@ -49,13 +54,21 @@ public class HistoryManager : MonoBehaviour
 
         if(www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+            Debug.LogWarning(www.error);
         }
         else
         {
             string jsonStr = www.downloadHandler.text;
-            Debug.Log(jsonStr);
             ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
+
+            if(data.stated())
+            {
+                Debug.Log("저장 성공");
+            }
+            else
+            {
+                Debug.LogWarning("저장 실패");
+            }
         }
     }
 
@@ -105,8 +118,9 @@ public class HistoryManager : MonoBehaviour
                     {
                         GameObject obj = Instantiate(_recipePref);
                         obj.GetComponent<RecipeHistory>().Init(data.RECIPE_ID.ToString());
-                        obj.GetComponent<RecipeHistory>().Link(this, _recipeDetailLoader);
+                        obj.GetComponent<RecipeHistory>().Link(_recipeDetailLoader, this);
                         obj.transform.SetParent(_contentHolder);
+                        _recipeObjList.Add(obj);
                     }
                 }
             }

@@ -70,10 +70,10 @@ public class Recipe : MonoBehaviour
         StartCoroutine(LoadRecipeInfo(recipeID));
     }
 
-    public void Link(HistoryManager historyManager, RecipeDetailedInfoLoader loader)
+    public void Link(RecipeDetailedInfoLoader loader, HistoryManager historyManager)
     {
-        _loader = loader;
         _historyManager = historyManager;
+        _loader = loader;
     }
 
     /// URL 이미지 로드
@@ -100,11 +100,10 @@ public class Recipe : MonoBehaviour
         if(_isActive && _loader != null)
         {
             StartCoroutine(LoadRecipeDetailInfo(_info.RECIPE_ID));
-            Debug.Log("자세한 정보 불러오기");
         }
     }
 
-    protected IEnumerator LoadRecipeDetailInfo(string recipeID)
+    virtual protected IEnumerator LoadRecipeDetailInfo(string recipeID)
     {
         WWWForm form = new WWWForm();
         form.AddField("recipeID", recipeID);
@@ -121,13 +120,13 @@ public class Recipe : MonoBehaviour
         else
         {
             string jsonStr = www.downloadHandler.text;
-            Debug.Log(jsonStr);
 
             if(jsonStr != "결과가 없습니다.")
             {
                 RecipeDetailedInfo detailedInfo = JsonUtility.FromJson<RecipeDetailedInfo>(jsonStr);
                 _loader.gameObject.SetActive(true);
                 _loader.LoadRecipe(detailedInfo);
+                _historyManager.SaveRecipe(recipeID);
             }
         }
     }

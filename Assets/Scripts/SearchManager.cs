@@ -10,24 +10,26 @@ public class SearchManager : MonoBehaviour
 {
     public string _searchUrl;
     public string _loadUrl;
-    public TMP_InputField KeywordInput;
-    public Dropdown OptionInput;
-    public TMP_Text Result;
-    public GameObject Printing;
-    public TMP_Text lookupText;
+    public TMP_InputField _keywordInput;
+    public Dropdown _optionInput;
 
-    public TMP_Text recipeIDInput;
-    string[] ar;
-    public GameObject prefabButton;
-    public RectTransform ParentPanel;
-    public TMP_Text prefabtext;
-    public GameObject preRecipe;
+    public Transform _resultRecipeHolder;
+    public GameObject _recipePref;
+    public List<GameObject> _recipeObjList;
+    public RecipeDetailedInfoLoader _recipeDetailLoader;
+    public HistoryManager _historyManager;
 
-    public GameObject content;
-    RecipeInfo[] list;
+    void Start()
+    {
+        foreach(var obj in _recipeObjList)
+        {
+            Destroy(obj);
+        }
+        _recipeObjList.Clear();
+    }
 
     // a List of Dropdown options (building name)
-    IEnumerator print(string search_Keyword, string search_Option)
+    IEnumerator Search(string search_Keyword, string search_Option)
     {
         WWWForm form = new WWWForm();
         form.AddField("searchKeyword", search_Keyword);
@@ -45,68 +47,47 @@ public class SearchManager : MonoBehaviour
         else
         {
             string jsonStr = www.downloadHandler.text;
-
-            list = JsonHelper.FromJson<RecipeInfo>(jsonStr);
-
-            for(int i = 0; i < list.Length - 1; i++)
+            Debug.Log(jsonStr);
+            if(jsonStr != "결과가 없습니다.")
             {
-                GameObject recipeObject = (GameObject)Instantiate(preRecipe);
-                recipeObject.GetComponent<SelectManager>().setID(list[i].RECIPE_ID);
-                recipeObject.transform.position = new Vector3(1200, 250 - i * 40, 1);
-                recipeObject.transform.parent = content.transform;
-                //recipeObject.GetComponentInChildren<TMP_Text>().text = list[i].RECIPE_NM_KO;
-                recipeObject.transform.GetChild(0).GetComponentInChildren<Text>().text = list[i].RECIPE_NM_KO;
+                RecipeInfo[] dataList = JsonHelper.FromJson<RecipeInfo>(jsonStr);
 
+                if(_recipePref != null)
+                {
+                    foreach(var data in dataList)
+                    {
+                        GameObject obj = Instantiate(_recipePref);
+                        obj.GetComponent<Recipe>().Init(data.RECIPE_ID.ToString());
+                        obj.GetComponent<Recipe>().Link(_recipeDetailLoader, _historyManager);
+                        obj.transform.SetParent(_resultRecipeHolder);
+                        _recipeObjList.Add(obj);
+                    }
+                }
             }
         }
     }
 
-    public void print()
+    public void Search()
     {
-        var keyword = KeywordInput.text;
-        var option = OptionInput.value;
+        foreach(var obj in _recipeObjList)
+        {
+            Destroy(obj);
+        }
+        _recipeObjList.Clear();
+
+        var keyword = _keywordInput.text;
+        var option = _optionInput.value;
         if(option == 0)
         {
-            StartCoroutine(print(keyword, "이름"));
+            StartCoroutine(Search(keyword, "이름"));
         }
         else if(option == 1)
         {
-            StartCoroutine(print(keyword, "난이도"));
+            StartCoroutine(Search(keyword, "난이도"));
         }
         else if(option == 2)
         {
-            StartCoroutine(print(keyword, "재료"));
+            StartCoroutine(Search(keyword, "재료"));
         }
-
-    }
-    IEnumerator lookupInfo(int recipeID)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("recipeID", recipeID);
-
-        UnityWebRequest www = UnityWebRequest.Post(_loadUrl, form);
-
-        www.timeout = 10; // 타임아웃 10초
-        yield return www.SendWebRequest();
-
-        if(www.isNetworkError || www.isHttpError)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            string jsonStr = www.downloadHandler.text;
-            Debug.Log(jsonStr);
-        }
-    }
-    public void lookupInfo()
-    {
-        int recipeID = 27;
-        StartCoroutine(lookupInfo(recipeID));
-    }
-
-    public void HandInputData(int val)
-    {
-
     }
 }
