@@ -11,7 +11,7 @@ public class LogOut : MonoBehaviour
 
         if(!UserManager.Instance.GetLoginState())
         {
-            SceneManager.LoadScene("Login");
+            SceneManager.LoadScene("StartMenu");
         }
     }
 }

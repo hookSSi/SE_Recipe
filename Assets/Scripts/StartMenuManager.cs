@@ -8,19 +8,13 @@ using TMPro;
 [Serializable]
 public class ResponseData
 {
-    [SerializeField] bool state;
-    [SerializeField] string desc;
+    [SerializeField] public bool state;
+    [SerializeField] public string desc;
 
     public ResponseData(bool state, string desc)
     {
         this.state = state;
         this.desc = desc;
-    }
-
-    public bool stated()
-    {
-        Debug.Log(state);
-        return state;
     }
 }
 
@@ -42,6 +36,9 @@ public class StartMenuManager : MonoBehaviour
     public TMP_InputField _registerEmailInput;
 
     public ErrorMessage _errorMessage;
+
+    public bool _requestProcessing = false; // 리퀘스트 보내고 언제 끝나는지 확인용
+    public ResponseData _data;
 
     void Start()
     {
@@ -85,28 +82,45 @@ public class StartMenuManager : MonoBehaviour
     }
 
     /// 회원가입
-    IEnumerator CoRegister(string username, string password, string email)
+    IEnumerator CoRegister(string userID, string userPW, string userEmail, string registerUrl)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("registerID", username);
-        form.AddField("registerPW", password);
-        form.AddField("registerEmail", email);
-
-        UnityWebRequest www = UnityWebRequest.Post(_registerUrl, form);
-
-        www.timeout = 10; // 타임아웃 10초
-        yield return www.SendWebRequest();
-
-        if(www.isNetworkError || www.isHttpError)
+        _requestProcessing = false;
+        // 4자 이상 입력했는지 확인
+        if(userID.Length < 4 || userPW.Length < 4 || userEmail.Length < 4)
         {
-            Debug.Log(www.error);
+            _data.state = false;
+            _requestProcessing = true;
         }
         else
         {
-            string jsonStr = www.downloadHandler.text;
-            ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
-            Debug.Log(jsonStr);
+            WWWForm form = new WWWForm();
+            form.AddField("registerID", userID);
+            form.AddField("registerPW", userPW);
+            form.AddField("registerEmail", userEmail + "@naver.com");
+
+            UnityWebRequest www = UnityWebRequest.Post(registerUrl, form);
+
+            www.timeout = 10; // 타임아웃 10초
+            yield return www.SendWebRequest();
+
+            if(www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                _requestProcessing = true;
+            }
+            else
+            {
+                string jsonStr = www.downloadHandler.text;
+                Debug.Log(jsonStr);
+                _data = JsonUtility.FromJson<ResponseData>(jsonStr);
+                _requestProcessing = true;
+            }
         }
+
+        if(_data.state)
+            CloseRegisterForm();
+        else
+            _errorMessage.PrintError("회원가입 실패");
     }
 
     public void OpenRegisterForm()
@@ -121,18 +135,21 @@ public class StartMenuManager : MonoBehaviour
 
     public void Register()
     {
-        // 4자 이상 입력했는지 확인
-        if(_registerIDInput.text.Length < 4 || _registerPWInput.text.Length < 4 || _registerEmailInput.text.Length < 4)
-        {
-            return;
-        }
-
         var registerID = _registerIDInput.text;
         var registerPW = _registerPWInput.text;
-        var registerEmail = _registerEmailInput.text + "@naver.com";
+        var registerEmail = _registerEmailInput.text;
 
-        StartCoroutine(CoRegister(registerID, registerPW, registerEmail));
-        CloseRegisterForm();
+        StartCoroutine(CoRegister(registerID, registerPW, registerEmail, _registerUrl));
+    }
+
+    /// 회원가입 테스트 함수
+    public void TestRegister()
+    {
+        string temp = _registerUrl;
+        string testUrl = "http://hook.iptime.org:1080/registerTest.php";
+        _registerUrl = testUrl;
+        Register();
+        _registerUrl = temp;
     }
 
     /// 로그인
@@ -144,23 +161,26 @@ public class StartMenuManager : MonoBehaviour
 
         UnityWebRequest www = UnityWebRequest.Post(_loginUrl, form);
 
+        _requestProcessing = false;
         www.timeout = 10; // 타임아웃 10초
         yield return www.SendWebRequest();
 
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            _requestProcessing = true;
         }
         else
         {
             string jsonStr = www.downloadHandler.text;
             Debug.Log(jsonStr);
-            ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
+            _data = JsonUtility.FromJson<ResponseData>(jsonStr);
             
-            if(data.stated() == true)
+            if(_data.state == true)
             {
                 UserManager.Instance.Login(loginID);
             }
+            _requestProcessing = true;
         }
     }
 

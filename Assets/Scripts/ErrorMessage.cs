@@ -5,32 +5,34 @@ using TMPro;
 
 public class ErrorMessage : MonoBehaviour
 {
-    public TMP_Text _text;
+    public TMP_Text _textUI;
+    public string _text;
     public float _duration = 2; // 지속시간
 
     private float _lapsed = 0;
 
     void Awake()
     {
-        if(_text == null)
+        if(_textUI == null)
         {
-            _text = this.GetComponent<TMP_Text>();
+            _textUI = this.GetComponent<TMP_Text>();
         }
 
-        if(_text != null)
+        if(_textUI != null)
         {
-            _text.text = "";
+            _textUI.text = "";
         }
     }
 
     public void PrintError(string errorMessage)
     {
-        StartCoroutine(CoPrintError(errorMessage));
+        _text = errorMessage;
+        StartCoroutine(CoPrintError(_text));
     }
 
     IEnumerator CoPrintError(string errorMessage)
     {
-        _text.text = errorMessage;
+        _textUI.text = _text.ToString();
         _lapsed = 0;
 
         while(_lapsed < _duration)
@@ -39,6 +41,6 @@ public class ErrorMessage : MonoBehaviour
             yield return null;
         }
 
-        _text.text = "";
+        _textUI.text = "";
     }
 }

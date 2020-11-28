@@ -34,17 +34,17 @@ namespace Tests
         {
             yield return new WaitWhile(() => sceneLoaded == false);
             
-            string userID = "test";
+            string userID = "hook";
             string userPW = "ab4202";
 
             StartMenuManager manager = GameObject.FindObjectOfType<StartMenuManager>();
             manager.Login(userID, userPW);
 
-            yield return new WaitForSeconds(10);
+             yield return new WaitWhile(() => manager._requestProcessing == false);
 
             string result = UserManager.Instance.GetID();
 
-            StringAssert.AreEqualIgnoringCase("test", result);
+            StringAssert.AreEqualIgnoringCase("hook", result);
 
             yield return null;
         }
@@ -60,7 +60,7 @@ namespace Tests
             StartMenuManager manager = GameObject.FindObjectOfType<StartMenuManager>();
             manager.Login(userID, userPW);
 
-            yield return new WaitForSeconds(10);
+            yield return new WaitWhile(() => manager._requestProcessing == false);
 
             bool result = UserManager.Instance.GetLoginState();
 

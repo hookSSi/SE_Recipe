@@ -61,7 +61,7 @@ public class HistoryManager : MonoBehaviour
             string jsonStr = www.downloadHandler.text;
             ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
 
-            if(data.stated())
+            if(data.state)
             {
                 Debug.Log("저장 성공");
             }

@@ -34,8 +34,14 @@ public static class InputHandleHelper
     {
         try 
         {
-           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+           string temp = Regex.Replace(str, @"[^0-9a-zA-Z]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+
+           if(temp.Length > 30)
+           {
+               temp = temp.Substring(0, 30);
+           }
+
+           return temp;
         }
         catch (RegexMatchTimeoutException) 
         {
@@ -47,8 +53,14 @@ public static class InputHandleHelper
     {
         try 
         {
-           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            string temp = Regex.Replace(str, @"[^0-9a-zA-Z]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+
+            if(temp.Length > 30)
+            {
+                temp = temp.Substring(0, 30);
+            }
+
+            return temp;
         }
         catch (RegexMatchTimeoutException) 
         {
@@ -60,8 +72,14 @@ public static class InputHandleHelper
     {
         try 
         {
-           return Regex.Replace(str, @"[^a-zA-Z0-9~`!@#$%^&*()_\-+={}[\]|\\;:'""<>,.?/]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            string temp = Regex.Replace(str, @"[^a-zA-Z0-9~`!@#$%^&*()_\-+={}[\]|\\;:'""<>,.?/]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+
+            if(temp.Length > 30)
+            {
+                temp = temp.Substring(0, 30);
+            }
+
+            return temp;
         }
         catch (RegexMatchTimeoutException) 
         {
