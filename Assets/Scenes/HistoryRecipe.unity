@@ -621,7 +621,7 @@ MonoBehaviour:
   - {fileID: 816535566}
   _recipePref: {fileID: 7114544724493650336, guid: ba01b09de978e6041ba964a584b4de6e,
     type: 3}
-  _errorMessage: {fileID: 1526469015}
+  _errorMessage: {fileID: 3551241844036956312}
   _recipeDetailLoader: {fileID: 1681204062152498435}
 --- !u!4 &528328992
 Transform:
@@ -902,18 +902,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3551241844036956311}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1526469015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3551241842868576512, guid: 62b09b35619925e459db45f649377f3d,
-    type: 3}
-  m_PrefabInstance: {fileID: 3551241844036956311}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1667164740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,8 +1579,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: ErrorMessage
       objectReference: {fileID: 0}
+    - target: {fileID: 3551241842868576514, guid: 62b09b35619925e459db45f649377f3d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62b09b35619925e459db45f649377f3d, type: 3}
+--- !u!114 &3551241844036956312 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 173087870181127250, guid: 62b09b35619925e459db45f649377f3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 3551241844036956311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017568ca227d74a4fb3ed39945b4067a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7114544726605938643
 PrefabInstance:
   m_ObjectHideFlags: 0

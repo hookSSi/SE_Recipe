@@ -28,14 +28,13 @@ public class UserManager : MonoBehaviour
         }   
     }
 
-
     public static UserManager Instance
     {
         get
         {
             if(null == instance)
             {
-                instance = new UserManager();
+                instance = new GameObject().AddComponent<UserManager>();
             }
             return instance;
         }
@@ -56,10 +55,9 @@ public class UserManager : MonoBehaviour
         {
             _userId = "";
             _loginState = false;
-            SceneManager.LoadScene("Login");
         }
     }
 
-    public string GetId() { return _userId; }
+    public string GetID() { return _userId; }
     public bool GetLoginState() { return _loginState; }
 }

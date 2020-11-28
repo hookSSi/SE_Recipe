@@ -24,7 +24,7 @@ public class HistoryManager : MonoBehaviour
     public List<GameObject> _recipeObjList = new List<GameObject>();
     public GameObject _recipePref;
 
-    public TMP_Text _errorMessage;
+    public ErrorMessage _errorMessage;
 
     public RecipeDetailedInfoLoader _recipeDetailLoader;
 
@@ -38,7 +38,7 @@ public class HistoryManager : MonoBehaviour
 
     public void SaveRecipe(string recipeID)
     {
-        StartCoroutine(SaveRecipe(UserManager.Instance.GetId(), recipeID));
+        StartCoroutine(SaveRecipe(UserManager.Instance.GetID(), recipeID));
     }
 
     protected IEnumerator SaveRecipe(string userID, string recipeID)
@@ -80,7 +80,7 @@ public class HistoryManager : MonoBehaviour
         }
         _recipeObjList.Clear();
 
-        string userID = UserManager.Instance.GetId();
+        string userID = UserManager.Instance.GetID();
         StartCoroutine(LoadRecipeSaved(userID));
     }
 
@@ -99,8 +99,7 @@ public class HistoryManager : MonoBehaviour
             Debug.Log(www.error);
             if(_errorMessage != null)
             {
-                _errorMessage.gameObject.SetActive(true);
-                _errorMessage.text = "서버와 통신 불량";
+                _errorMessage.PrintError("서버와 통신 불량");
             }
         }
         else
@@ -128,8 +127,7 @@ public class HistoryManager : MonoBehaviour
             {
                 if(_errorMessage != null)
                 {
-                    _errorMessage.gameObject.SetActive(true);
-                    _errorMessage.text = "결과가 없습니다.";
+                    _errorMessage.PrintError("결과가 없습니다.");
                 }
             }
         }

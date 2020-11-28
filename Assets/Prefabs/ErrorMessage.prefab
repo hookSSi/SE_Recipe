@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 3551241842868576513}
   - component: {fileID: 3551241842868576527}
   - component: {fileID: 3551241842868576512}
+  - component: {fileID: 173087870181127250}
   m_Layer: 5
   m_Name: ErrorMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3551241842868576513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -66,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC5D0\uB7EC \uBA54\uC2DC\uC9C0"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0a5540c0ba8ea9b4e8be0663724298e2, type: 2}
-  m_sharedMaterial: {fileID: 8543454374018117401, guid: 0a5540c0ba8ea9b4e8be0663724298e2,
+  m_fontAsset: {fileID: 11400000, guid: c70b2fd79deefe54791bb9947d4c10fc, type: 2}
+  m_sharedMaterial: {fileID: 8543454374018117401, guid: c70b2fd79deefe54791bb9947d4c10fc,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -134,3 +135,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &173087870181127250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3551241842868576514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017568ca227d74a4fb3ed39945b4067a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 3551241842868576512}
+  _duration: 2

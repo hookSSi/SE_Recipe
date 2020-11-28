@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>2020-11-28 - PM 10:06:52</Generatedon>
+    <Parser>MultiReportParser (3x OpenCoverParser)</Parser>
+    <Assemblies>1</Assemblies>
+    <Classes>2</Classes>
+    <Files>2</Files>
+    <Coveredlines>13</Coveredlines>
+    <Uncoveredlines>38</Uncoveredlines>
+    <Coverablelines>51</Coverablelines>
+    <Totallines>120</Totallines>
+    <Linecoverage>25.4</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>0</Totalbranches>
+  </Summary>
+  <Coverage>
+    <Assembly name="Tests" classes="2" coverage="25.4" coveredlines="13" coverablelines="51" totallines="120" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="Tests.LoginTester" coverage="0" coveredlines="0" coverablelines="32" totallines="72" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests.RegisterTester" coverage="68.4" coveredlines="13" coverablelines="19" totallines="48" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+  </Coverage>
+</CoverageReport>

@@ -12,12 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SearchManager.unity
     guid: 282c8d8a8598b7c43859d161aa17ff51
   - enabled: 1
-    path: Assets/Scenes/Login.unity
+    path: Assets/Scenes/StartMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/HistoryRecipe.unity
     guid: aa421486d41912647b2eebe530bc26e2
-  - enabled: 1
-    path: Assets/Scenes/Test.unity
-    guid: fc2b0cf2c8d253646b55fdcfdcdc3a15
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

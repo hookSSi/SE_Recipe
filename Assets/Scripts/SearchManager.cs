@@ -19,6 +19,8 @@ public class SearchManager : MonoBehaviour
     public RecipeDetailedInfoLoader _recipeDetailLoader;
     public HistoryManager _historyManager;
 
+    public ErrorMessage _errorMessage;
+
     void Start()
     {
         foreach(var obj in _recipeObjList)
@@ -43,6 +45,10 @@ public class SearchManager : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            if(_errorMessage != null)
+            {
+                _errorMessage.PrintError("서버와 통신 불량");
+            }
         }
         else
         {
@@ -64,6 +70,13 @@ public class SearchManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                if(_errorMessage != null)
+                {
+                    _errorMessage.PrintError("결과가 없습니다.");
+                }
+            }
         }
     }
 
@@ -77,17 +90,30 @@ public class SearchManager : MonoBehaviour
 
         var keyword = _keywordInput.text;
         var option = _optionInput.value;
-        if(option == 0)
+        if(CheckKeywordValid(keyword))
         {
-            StartCoroutine(Search(keyword, "이름"));
+            if(option == 0)
+            {
+                StartCoroutine(Search(keyword, "이름"));
+            }
+            else if(option == 1)
+            {
+                StartCoroutine(Search(keyword, "난이도"));
+            }
+            else if(option == 2)
+            {
+                StartCoroutine(Search(keyword, "재료"));
+            }
         }
-        else if(option == 1)
+        else
         {
-            StartCoroutine(Search(keyword, "난이도"));
+            _errorMessage.PrintError("검색어 오류");
         }
-        else if(option == 2)
-        {
-            StartCoroutine(Search(keyword, "재료"));
-        }
+    }
+
+    // 검색어에 특수문자나 공백만 검색했는지 확인하는 함수
+    public bool CheckKeywordValid(string keyword)
+    {
+        return !(InputHandleHelper.CheckingEmptyText(keyword) | InputHandleHelper.CheckingSpecialText(keyword));
     }
 }

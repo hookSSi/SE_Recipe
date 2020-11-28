@@ -6,7 +6,7 @@ public class RecipeHistory : Recipe
 {
     public void RemoveHistory()
     {
-        string userID = UserManager.Instance.GetId();
+        string userID = UserManager.Instance.GetID();
         string recipeID = this._info.RECIPE_ID;
 
         StartCoroutine(_historyManager.RemoveRecipe(userID, recipeID));

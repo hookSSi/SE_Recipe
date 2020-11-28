@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,8 +26,8 @@ public class ResponseData
 
 public class StartMenuManager : MonoBehaviour
 {
-    public string _loginUrl;
-    public string _registerUrl;
+    public string _loginUrl = "http://hook.iptime.org:1080/login.php";
+    public string _registerUrl = "http://hook.iptime.org:1080/register.php";
 
     /// 회원가입 폼
     public GameObject _registerForm;
@@ -42,34 +41,51 @@ public class StartMenuManager : MonoBehaviour
     public TMP_InputField _registerPWInput;
     public TMP_InputField _registerEmailInput;
 
+    public ErrorMessage _errorMessage;
+
     void Start()
     {
         // 모든 ID 입력은 소문자로만
         // 특수문자, 공백 처리, 영어외 언어 처리
-        _loginIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
-			return changeLowerCase (addedChar);
-		};
-        _loginIDInput.onValueChanged.AddListener(delegate { _loginIDInput.text = CleanIDInput(_loginIDInput.text); });
+        if(_loginIDInput != null)
+        {
+            _loginIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+                return InputHandleHelper.changeLowerCase (addedChar);
+            };
+            _loginIDInput.onValueChanged.AddListener(delegate { _loginIDInput.text = InputHandleHelper.CleanIDInput(_loginIDInput.text); });
+        }
 
-        _registerIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
-			return changeLowerCase (addedChar);
-		};
-        _registerIDInput.onValueChanged.AddListener(delegate { _registerIDInput.text = CleanIDInput(_registerIDInput.text); });
+        if(_registerIDInput != null)
+        {
+            _registerIDInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+                return InputHandleHelper.changeLowerCase (addedChar);
+            };
+            _registerIDInput.onValueChanged.AddListener(delegate { _registerIDInput.text = InputHandleHelper.CleanIDInput(_registerIDInput.text); });
+        }
 
         // 모든 Email 입력은 소문자로만
         // 특수문자, 공백 처리, 영어외 언어 처리
-        _registerEmailInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
-			return changeLowerCase (addedChar);
-		};
-        _registerEmailInput.onValueChanged.AddListener(delegate { _registerEmailInput.text = CleanEmailInput(_registerEmailInput.text); });
+        if(_registerEmailInput != null)
+        {
+            _registerEmailInput.onValidateInput += delegate(string text, int charIndex, char addedChar) {
+                return InputHandleHelper.changeLowerCase (addedChar);
+            };
+            _registerEmailInput.onValueChanged.AddListener(delegate { _registerEmailInput.text = InputHandleHelper.CleanEmailInput(_registerEmailInput.text); });
+        }
 
         // 패스워드의 공백 처리, 영어외 언어 처리
-        _loginPWInput.onValueChanged.AddListener(delegate { _loginPWInput.text = CleanPasswordInput(_loginPWInput.text); });
-        _registerPWInput.onValueChanged.AddListener(delegate { _registerPWInput.text = CleanPasswordInput(_registerPWInput.text); });
+        if(_loginPWInput != null)
+        {
+            _loginPWInput.onValueChanged.AddListener(delegate { _loginPWInput.text = InputHandleHelper.CleanPasswordInput(_loginPWInput.text); });
+        }
+        if(_registerPWInput != null)
+        {
+            _registerPWInput.onValueChanged.AddListener(delegate { _registerPWInput.text = InputHandleHelper.CleanPasswordInput(_registerPWInput.text); });
+        }
     }
 
     /// 회원가입
-    IEnumerator Register(string username, string password, string email)
+    IEnumerator CoRegister(string username, string password, string email)
     {
         WWWForm form = new WWWForm();
         form.AddField("registerID", username);
@@ -115,16 +131,16 @@ public class StartMenuManager : MonoBehaviour
         var registerPW = _registerPWInput.text;
         var registerEmail = _registerEmailInput.text + "@naver.com";
 
-        StartCoroutine(Register(registerID, registerPW, registerEmail));
+        StartCoroutine(CoRegister(registerID, registerPW, registerEmail));
         CloseRegisterForm();
     }
 
     /// 로그인
-    IEnumerator Login(string username, string password)
+    IEnumerator CoLogin(string loginID, string loginPW)
     {
         WWWForm form = new WWWForm();
-        form.AddField("loginID", username);
-        form.AddField("loginPW", password);
+        form.AddField("loginID", loginID);
+        form.AddField("loginPW", loginPW);
 
         UnityWebRequest www = UnityWebRequest.Post(_loginUrl, form);
 
@@ -138,14 +154,13 @@ public class StartMenuManager : MonoBehaviour
         else
         {
             string jsonStr = www.downloadHandler.text;
+            Debug.Log(jsonStr);
             ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
             
             if(data.stated() == true)
             {
-                UserManager.Instance.Login(username);
-                SceneManager.LoadScene("MainMenu");
+                UserManager.Instance.Login(loginID);
             }
-            Debug.Log(jsonStr);
         }
     }
 
@@ -154,7 +169,17 @@ public class StartMenuManager : MonoBehaviour
         var loginID = _loginIDInput.text;
         var loginPW = _loginPWInput.text;
 
-        StartCoroutine(Login(loginID, loginPW));
+        Login(loginID, loginPW);
+
+        if(UserManager.Instance.GetLoginState())
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    public void Login(string loginID, string loginPW)
+    {
+        StartCoroutine(CoLogin(loginID, loginPW));
     }
 
     public void ExitProgram()
@@ -164,57 +189,5 @@ public class StartMenuManager : MonoBehaviour
         #else
             Application.Quit() // 어플리케이션 종료
         #endif
-    }
-
-    char changeLowerCase(char _cha)
-	{
-		char tmpChar = _cha;
-
-		string tmpString = tmpChar.ToString();
-
-		tmpString = tmpString.ToLower ();
-
-		tmpChar = System.Convert.ToChar (tmpString);
-
-		return tmpChar;
-	}
-
-    string CleanIDInput(string str)
-    {
-        try 
-        {
-           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
-        }
-        catch (RegexMatchTimeoutException) 
-        {
-           return String.Empty;
-        }
-    }
-
-    string CleanEmailInput(string str)
-    {
-        try 
-        {
-           return Regex.Replace(str, @"[^0-9a-zA-Z]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
-        }
-        catch (RegexMatchTimeoutException) 
-        {
-           return String.Empty;
-        }
-    }
-
-    string CleanPasswordInput(string str)
-    {
-        try 
-        {
-           return Regex.Replace(str, @"[^a-zA-Z0-9~`!@#$%^&*()_\-+={}[\]|\\;:'""<>,.?/]", "",
-                                RegexOptions.None, TimeSpan.FromSeconds(1.5));
-        }
-        catch (RegexMatchTimeoutException) 
-        {
-           return String.Empty;
-        }
     }
 }

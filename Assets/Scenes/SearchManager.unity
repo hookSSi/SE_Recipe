@@ -619,6 +619,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &178564955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 173087870181127250, guid: 62b09b35619925e459db45f649377f3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 835031511}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017568ca227d74a4fb3ed39945b4067a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &187122875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1453,7 @@ PrefabInstance:
     - target: {fileID: 3551241842868576514, guid: 62b09b35619925e459db45f649377f3d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62b09b35619925e459db45f649377f3d, type: 3}
@@ -3908,6 +3920,7 @@ MonoBehaviour:
   - {fileID: 793069238}
   _recipeDetailLoader: {fileID: 342075707}
   _historyManager: {fileID: 1428512858}
+  _errorMessage: {fileID: 178564955}
 --- !u!1 &1822186800
 GameObject:
   m_ObjectHideFlags: 0
