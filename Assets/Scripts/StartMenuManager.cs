@@ -153,7 +153,7 @@ public class StartMenuManager : MonoBehaviour
     }
 
     /// 로그인
-    IEnumerator CoLogin(string loginID, string loginPW)
+    IEnumerator CoLogin(string loginID, string loginPW, bool isTest)
     {
         WWWForm form = new WWWForm();
         form.AddField("loginID", loginID);
@@ -178,7 +178,11 @@ public class StartMenuManager : MonoBehaviour
             
             if(_data.state == true)
             {
-                UserManager.Instance.Login(loginID);
+                UserManager.Instance.Login(loginID, isTest);
+            }
+            else
+            {
+                _errorMessage._text = "로그인 실패";
             }
             _requestProcessing = true;
         }
@@ -186,20 +190,15 @@ public class StartMenuManager : MonoBehaviour
 
     public void Login()
     {
+        Login(false);
+    }
+
+    public void Login(bool isTest)
+    {
         var loginID = _loginIDInput.text;
         var loginPW = _loginPWInput.text;
 
-        Login(loginID, loginPW);
-
-        if(UserManager.Instance.GetLoginState())
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
-    }
-
-    public void Login(string loginID, string loginPW)
-    {
-        StartCoroutine(CoLogin(loginID, loginPW));
+        StartCoroutine(CoLogin(loginID, loginPW, isTest));
     }
 
     public void ExitProgram()

@@ -40,12 +40,15 @@ public class UserManager : MonoBehaviour
         }
     }
 
-    public void Login(string userId)
+    public void Login(string userId, bool isTest)
     {
         if(!_loginState)
         {
             _userId = userId;
             _loginState = true;
+
+            if(!isTest)
+                SceneManager.LoadScene("MainMenu");
         }
     }
 
