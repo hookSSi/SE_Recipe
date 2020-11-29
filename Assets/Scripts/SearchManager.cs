@@ -6,6 +6,13 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
+public enum SearchOption
+{
+    RECIPE_NAME = 0,
+    LEVEL = 1,
+    INGREDIENT = 2
+}
+
 public class SearchManager : MonoBehaviour
 {
     public string _searchUrl;
@@ -20,6 +27,7 @@ public class SearchManager : MonoBehaviour
     public HistoryManager _historyManager;
 
     public ErrorMessage _errorMessage;
+    public bool _requestProcessing = false;
 
     void Start()
     {
@@ -28,6 +36,11 @@ public class SearchManager : MonoBehaviour
             Destroy(obj);
         }
         _recipeObjList.Clear();
+
+        if(_keywordInput != null)
+        {
+            _keywordInput.onValueChanged.AddListener(delegate { _keywordInput.text = InputHandleHelper.CleanSearchInput(_keywordInput.text); });
+        }
     }
 
     // a List of Dropdown options (building name)
@@ -47,7 +60,7 @@ public class SearchManager : MonoBehaviour
             Debug.Log(www.error);
             if(_errorMessage != null)
             {
-                _errorMessage.PrintError("서버와 통신 불량");
+                _errorMessage.PrintError("서버와 통신불량");
             }
         }
         else
@@ -67,6 +80,7 @@ public class SearchManager : MonoBehaviour
                         obj.GetComponent<Recipe>().Link(_recipeDetailLoader, _historyManager);
                         obj.transform.SetParent(_resultRecipeHolder);
                         _recipeObjList.Add(obj);
+                        yield return new WaitWhile(() => obj.GetComponent<Recipe>()._isActive == false);
                     }
                 }
             }
@@ -78,10 +92,12 @@ public class SearchManager : MonoBehaviour
                 }
             }
         }
+        _requestProcessing = true;
     }
 
     public void Search()
     {
+        _requestProcessing = false;
         foreach(var obj in _recipeObjList)
         {
             Destroy(obj);
@@ -92,21 +108,31 @@ public class SearchManager : MonoBehaviour
         var option = _optionInput.value;
         if(CheckKeywordValid(keyword))
         {
-            if(option == 0)
+            if(option == (int)SearchOption.RECIPE_NAME)
             {
                 StartCoroutine(Search(keyword, "이름"));
             }
-            else if(option == 1)
+            else if(option == (int)SearchOption.LEVEL)
             {
-                StartCoroutine(Search(keyword, "난이도"));
+                // 난이도는 초보환영, 보통, 어려움으로 나누어져있음
+                if(keyword == "초보환영" || keyword == "보통" || keyword == "어려움")
+                {
+                    StartCoroutine(Search(keyword, "난이도"));
+                }
+                else
+                {
+                    _requestProcessing = true;
+                    _errorMessage.PrintError("검색어 오류");
+                }
             }
-            else if(option == 2)
+            else if(option == (int)SearchOption.INGREDIENT)
             {
                 StartCoroutine(Search(keyword, "재료"));
             }
         }
         else
         {
+            _requestProcessing = true;
             _errorMessage.PrintError("검색어 오류");
         }
     }

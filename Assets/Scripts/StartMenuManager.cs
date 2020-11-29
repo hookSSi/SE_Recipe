@@ -22,6 +22,7 @@ public class StartMenuManager : MonoBehaviour
 {
     public string _loginUrl = "http://hook.iptime.org:1080/login.php";
     public string _registerUrl = "http://hook.iptime.org:1080/register.php";
+    public string _testRegisterUrl = "http://hook.iptime.org:1080/registerTest.php";
 
     /// 회원가입 폼
     public GameObject _registerForm;
@@ -90,6 +91,7 @@ public class StartMenuManager : MonoBehaviour
         {
             _data.state = false;
             _requestProcessing = true;
+            _errorMessage.PrintError("회원가입 실패");
         }
         else
         {
@@ -107,6 +109,10 @@ public class StartMenuManager : MonoBehaviour
             {
                 Debug.Log(www.error);
                 _requestProcessing = true;
+                if(_errorMessage != null)
+                {
+                    _errorMessage.PrintError("서버와 통신불량");
+                }
             }
             else
             {
@@ -114,13 +120,13 @@ public class StartMenuManager : MonoBehaviour
                 Debug.Log(jsonStr);
                 _data = JsonUtility.FromJson<ResponseData>(jsonStr);
                 _requestProcessing = true;
+
+                if(_data.state)
+                    CloseRegisterForm();
+                else
+                    _errorMessage.PrintError("회원가입 실패");
             }
         }
-
-        if(_data.state)
-            CloseRegisterForm();
-        else
-            _errorMessage.PrintError("회원가입 실패");
     }
 
     public void OpenRegisterForm()
@@ -146,7 +152,7 @@ public class StartMenuManager : MonoBehaviour
     public void TestRegister()
     {
         string temp = _registerUrl;
-        string testUrl = "http://hook.iptime.org:1080/registerTest.php";
+        string testUrl = _testRegisterUrl;
         _registerUrl = testUrl;
         Register();
         _registerUrl = temp;
@@ -168,6 +174,10 @@ public class StartMenuManager : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            if(_errorMessage != null)
+            {
+                _errorMessage.PrintError("서버와 통신불량");
+            }
             _requestProcessing = true;
         }
         else

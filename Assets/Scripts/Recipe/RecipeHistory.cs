@@ -6,11 +6,7 @@ public class RecipeHistory : Recipe
 {
     public void RemoveHistory()
     {
-        string userID = UserManager.Instance.GetID();
-        string recipeID = this._info.RECIPE_ID;
-
-        StartCoroutine(_historyManager.RemoveRecipe(userID, recipeID));
-        Destroy(this.gameObject);
+        _historyManager.RemoveRecipe(this);
     }
 
     override protected IEnumerator LoadRecipeDetailInfo(string recipeID)

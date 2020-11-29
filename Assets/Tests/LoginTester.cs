@@ -21,6 +21,7 @@ namespace Tests
  
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            UserManager.Instance.LogOut();
             sceneLoaded = true;
         }
 
@@ -111,6 +112,31 @@ namespace Tests
             }
 
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator 서버통신불량_로그인_테스트()
+        {
+            yield return new WaitWhile(() => sceneLoaded == false);
+
+            string userID = "hook";
+            string userPW = "ab4202";
+
+            StartMenuManager manager = GameObject.FindObjectOfType<StartMenuManager>();
+            
+            string temp = manager._loginUrl;
+            manager._loginUrl = "통신불량URL";
+            manager._loginIDInput.text = userID;
+            manager._loginPWInput.text = userPW;
+            
+            manager.Login(true);
+
+            yield return new WaitWhile(() => manager._requestProcessing == false);
+
+            string result = UserManager.Instance.GetID();
+            StringAssert.AreNotEqualIgnoringCase("hook", result);
+            StringAssert.AreEqualIgnoringCase("서버와 통신불량", manager._errorMessage._text);
+            manager._loginUrl = temp;
         }
 
         [UnityTest]
@@ -209,17 +235,7 @@ namespace Tests
             UnityWebRequest www = UnityWebRequest.Post(url, form);
 
             www.timeout = 10; // 타임아웃 10초
-            yield return www.SendWebRequest();
-
-            if(www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string jsonStr = www.downloadHandler.text;
-                Debug.Log(jsonStr);
-            }    
+            yield return www.SendWebRequest(); 
         }
     }
 }

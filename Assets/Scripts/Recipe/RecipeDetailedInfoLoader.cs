@@ -26,7 +26,6 @@ public class RecipeDetailedInfoLoader : MonoBehaviour
         _levelText.text = info.RECIPE.LEVEL_NM;
 
         // 재료 정보
-        ClearIngredientList();
         foreach(var ingredient in info.INGREDIENT)
         {
             GameObject obj = Instantiate(_ingredientPref);
@@ -36,7 +35,6 @@ public class RecipeDetailedInfoLoader : MonoBehaviour
         }
 
         // 요리 과정
-        ClearCookingProcessList();
         foreach(var process in info.PROCESS)
         {
             GameObject obj = Instantiate(_cookingProcessPref);
@@ -44,6 +42,14 @@ public class RecipeDetailedInfoLoader : MonoBehaviour
             obj.transform.SetParent(_cookingProcessHolder.transform);
             _cookingProcessObjList.Add(obj);
         }
+    }
+
+    public void Clear()
+    {
+        _recipeNameText.text = "";
+        _levelText.text = "";
+        ClearIngredientList();
+        ClearCookingProcessList();
     }
 
     public void ClearIngredientList()

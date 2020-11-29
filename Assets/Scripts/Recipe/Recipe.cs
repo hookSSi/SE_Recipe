@@ -56,13 +56,15 @@ public class Recipe : MonoBehaviour
     public RawImage _recipeImage; // 섬네일 UI
     public TMP_Text _descUI; // 간단한 설명 UI
     public TMP_Text _recipeNameUI; // 레시피 이름
-    protected RecipeInfo _info;
-    protected RecipeDetailedInfoLoader _loader; // 디테일 창
+    public RecipeInfo _info;
+    public RecipeDetailedInfoLoader _loader; // 디테일 창
     protected HistoryManager _historyManager;
-    private bool _isActive = false;
+    public bool _isActive = false;
 
     public string _loadRecipeInfoUrl = "hook.iptime.org:1080/loadRecipeInfo.php";
     public string _loadRecipeDetailInfoUrl = "hook.iptime.org:1080/loadRecipeDetailInfo.php";
+
+    public bool _requestProcessing = false; // 리퀘스트 보내고 언제 끝나는지 확인용
 
     // 초기화
     public void Init(string recipeID)
@@ -105,6 +107,8 @@ public class Recipe : MonoBehaviour
 
     virtual protected IEnumerator LoadRecipeDetailInfo(string recipeID)
     {
+        _requestProcessing = false;
+        _loader.Clear();
         WWWForm form = new WWWForm();
         form.AddField("recipeID", recipeID);
 
@@ -116,6 +120,7 @@ public class Recipe : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            _historyManager._errorMessage.PrintError("서버와 통신불량");
         }
         else
         {
@@ -129,11 +134,13 @@ public class Recipe : MonoBehaviour
                 _historyManager.SaveRecipe(recipeID);
             }
         }
+        _requestProcessing = true;
     }
 
     /// 레시피 정보 불러오기
     protected IEnumerator LoadRecipeInfo(string recipeID)
     {
+        _requestProcessing = false;
         WWWForm form = new WWWForm();
         form.AddField("recipeID", recipeID);
 
@@ -145,6 +152,10 @@ public class Recipe : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            // 레시피 이름 로드
+            _recipeNameUI.text = "서버와 통신불량";
+            // 간단한 설명 로드
+            _descUI.text = "서버와 통신불량";
         }
         else
         {
@@ -154,18 +165,20 @@ public class Recipe : MonoBehaviour
             if(jsonStr != "결과가 없습니다.")
             {
                 this._info = JsonUtility.FromJson<RecipeInfo>(jsonStr);
+
+                // 섬네일 로드
+                yield return LoadImageTexture(this._info.IMG_URL);
+
+                // 레시피 이름 로드
+                _recipeNameUI.text = this._info.RECIPE_NM_KO;
+                // 간단한 설명 로드
+                _descUI.text = this._info.SUMRY;
+                // 레시피 활성화
+                _isActive = true;
             }
         }
 
-        // 섬네일 로드
-        yield return LoadImageTexture(this._info.IMG_URL);
 
-        // 레시피 이름 로드
-        _recipeNameUI.text = this._info.RECIPE_NM_KO;
-        // 간단한 설명 로드
-        _descUI.text = this._info.SUMRY;
-
-        // 레시피 활성화
-        _isActive = true;
+        _requestProcessing = true;
     }
 }

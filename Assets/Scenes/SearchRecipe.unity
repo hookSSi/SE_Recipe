@@ -2632,8 +2632,12 @@ MonoBehaviour:
   _contentHolder: {fileID: 0}
   _recipeObjList: []
   _recipePref: {fileID: 0}
-  _errorMessage: {fileID: 0}
+  _errorMessage: {fileID: 178564955}
   _recipeDetailLoader: {fileID: 0}
+  _requestProcessing: 0
+  _data:
+    state: 0
+    desc: 
 --- !u!1 &1441122086
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3081,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_CharacterLimit: 50
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -3921,6 +3925,7 @@ MonoBehaviour:
   _recipeDetailLoader: {fileID: 342075707}
   _historyManager: {fileID: 1428512858}
   _errorMessage: {fileID: 178564955}
+  _requestProcessing: 0
 --- !u!1 &1822186800
 GameObject:
   m_ObjectHideFlags: 0

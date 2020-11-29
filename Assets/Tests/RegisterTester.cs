@@ -21,6 +21,7 @@ namespace Tests
  
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            UserManager.Instance.LogOut();
             sceneLoaded = true;
         }
 
@@ -61,6 +62,28 @@ namespace Tests
             yield return new WaitWhile(() => manager._requestProcessing == false);
 
             Assert.IsTrue(manager._data.state);
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator 서버통신불량_회원가입_테스트()
+        {
+            StartMenuManager manager = GameObject.FindObjectOfType<StartMenuManager>();
+
+            string temp = manager._testRegisterUrl;
+            manager._testRegisterUrl = "통신불량URL";
+            manager._registerIDInput.text = "test";
+            manager._registerPWInput.text = "ab4202";
+            manager._registerEmailInput.text = "test";
+
+            manager.TestRegister();
+
+            yield return new WaitWhile(() => manager._requestProcessing == false);
+            Assert.IsFalse(manager._data.state);
+            StringAssert.AreEqualIgnoringCase("서버와 통신불량", manager._errorMessage._text);
+
+            manager._testRegisterUrl = temp;
 
             yield return null;
         }

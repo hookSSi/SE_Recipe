@@ -86,4 +86,22 @@ public static class InputHandleHelper
            return String.Empty;
         }
     }
+    public static string CleanSearchInput(string str)
+    {
+        try 
+        {
+            string temp = Regex.Replace(str, @"[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9 ]+", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+
+            if(temp.Length > 50)
+            {
+                temp = temp.Substring(0, 50);
+            }
+
+            return temp;
+        }
+        catch (RegexMatchTimeoutException) 
+        {
+           return String.Empty;
+        }
+    }
 }

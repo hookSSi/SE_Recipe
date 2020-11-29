@@ -27,6 +27,8 @@ public class HistoryManager : MonoBehaviour
     public ErrorMessage _errorMessage;
 
     public RecipeDetailedInfoLoader _recipeDetailLoader;
+    public bool _requestProcessing = false; // 리퀘스트 보내고 언제 끝나는지 확인용
+    public ResponseData _data;
 
     void Start()
     {
@@ -38,11 +40,14 @@ public class HistoryManager : MonoBehaviour
 
     public void SaveRecipe(string recipeID)
     {
-        StartCoroutine(SaveRecipe(UserManager.Instance.GetID(), recipeID));
+        string userID = UserManager.Instance.GetID();
+        Debug.LogFormat("{0}에 {1} 저장 시도", userID, recipeID);
+        StartCoroutine(SaveRecipe(userID, recipeID));
     }
 
     protected IEnumerator SaveRecipe(string userID, string recipeID)
     {
+        _requestProcessing = false;
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
         form.AddField("recipeID", recipeID);
@@ -55,21 +60,18 @@ public class HistoryManager : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.LogWarning(www.error);
+            if(_errorMessage)
+            {
+                _errorMessage.PrintError("서버와 통신불량");
+            }
         }
         else
         {
             string jsonStr = www.downloadHandler.text;
-            ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
-
-            if(data.state)
-            {
-                Debug.Log("저장 성공");
-            }
-            else
-            {
-                Debug.LogWarning("저장 실패");
-            }
+            Debug.Log(jsonStr);
+            _data = JsonUtility.FromJson<ResponseData>(jsonStr);
         }
+        _requestProcessing = true;
     }
 
     public void LoadRecipeSaved()
@@ -86,6 +88,7 @@ public class HistoryManager : MonoBehaviour
 
     protected IEnumerator LoadRecipeSaved(string userID)
     {
+        _requestProcessing = false;
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
 
@@ -99,7 +102,7 @@ public class HistoryManager : MonoBehaviour
             Debug.Log(www.error);
             if(_errorMessage != null)
             {
-                _errorMessage.PrintError("서버와 통신 불량");
+                _errorMessage.PrintError("서버와 통신불량");
             }
         }
         else
@@ -120,6 +123,7 @@ public class HistoryManager : MonoBehaviour
                         obj.GetComponent<RecipeHistory>().Link(_recipeDetailLoader, this);
                         obj.transform.SetParent(_contentHolder);
                         _recipeObjList.Add(obj);
+                        yield return new WaitWhile(() => obj.GetComponent<RecipeHistory>()._isActive == false);
                     }
                 }
             }
@@ -131,10 +135,24 @@ public class HistoryManager : MonoBehaviour
                 }
             }
         }
+        _requestProcessing = true;
     }
 
-    public IEnumerator RemoveRecipe(string userID, string recipeID)
+    public void RemoveRecipe(string userID, string recipeID)
     {
+        Debug.LogFormat("{0}에 {1} 삭제 시도", userID, recipeID);
+        StartCoroutine(CoRemoveRecipe(userID, recipeID));
+    }
+
+    public void RemoveRecipe(Recipe recipe)
+    {
+        Debug.LogFormat("{0}에 {1} 삭제 시도", UserManager.Instance.GetID(), recipe._info.RECIPE_ID);
+        StartCoroutine(CoRemoveRecipe(recipe));
+    }
+
+    public IEnumerator CoRemoveRecipe(string userID, string recipeID)
+    {
+        _requestProcessing = false;
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
         form.AddField("recipeID", recipeID);
@@ -147,12 +165,49 @@ public class HistoryManager : MonoBehaviour
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.Log(www.error);
+            
+            if(_errorMessage != null)
+            {
+                _errorMessage.PrintError("서버와 통신불량");
+            }
         }
         else
         {
             string jsonStr = www.downloadHandler.text;
             Debug.Log(jsonStr);
-            ResponseData data = JsonUtility.FromJson<ResponseData>(jsonStr);
+            _data = JsonUtility.FromJson<ResponseData>(jsonStr);
         }
+        _requestProcessing = true;
+    }
+
+    public IEnumerator CoRemoveRecipe(Recipe recipe)
+    {
+        _requestProcessing = false;
+        WWWForm form = new WWWForm();
+        form.AddField("userID", UserManager.Instance.GetID());
+        form.AddField("recipeID", recipe._info.RECIPE_ID);
+
+        UnityWebRequest www = UnityWebRequest.Post(_removeRecipeUrl, form);
+
+        www.timeout = 10; // 타임아웃 10초
+        yield return www.SendWebRequest();
+
+        if(www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+            
+            if(_errorMessage != null)
+            {
+                _errorMessage.PrintError("서버와 통신불량");
+            }
+        }
+        else
+        {
+            string jsonStr = www.downloadHandler.text;
+            Debug.Log(jsonStr);
+            _data = JsonUtility.FromJson<ResponseData>(jsonStr);
+            Destroy(recipe.gameObject);
+        }
+        _requestProcessing = true;
     }
 }

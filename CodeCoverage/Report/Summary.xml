@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CoverageReport scope="Summary">
   <Summary>
-    <Generatedon>2020-11-29 - AM 1:54:57</Generatedon>
+    <Generatedon>2020-11-29 - PM 6:24:23</Generatedon>
     <Parser>MultiReportParser (5x OpenCoverParser)</Parser>
     <Assemblies>1</Assemblies>
-    <Classes>2</Classes>
-    <Files>2</Files>
-    <Coveredlines>221</Coveredlines>
-    <Uncoveredlines>36</Uncoveredlines>
-    <Coverablelines>257</Coverablelines>
-    <Totallines>484</Totallines>
-    <Linecoverage>85.9</Linecoverage>
+    <Classes>5</Classes>
+    <Files>5</Files>
+    <Coveredlines>540</Coveredlines>
+    <Uncoveredlines>97</Uncoveredlines>
+    <Coverablelines>637</Coverablelines>
+    <Totallines>1095</Totallines>
+    <Linecoverage>84.7</Linecoverage>
     <Coveredbranches>0</Coveredbranches>
     <Totalbranches>0</Totalbranches>
   </Summary>
   <Coverage>
-    <Assembly name="Tests" classes="2" coverage="85.9" coveredlines="221" coverablelines="257" totallines="484" branchcoverage="" coveredbranches="0" totalbranches="0">
-      <Class name="Tests.LoginTester" coverage="83.7" coveredlines="103" coverablelines="123" totallines="225" branchcoverage="" coveredbranches="0" totalbranches="0" />
-      <Class name="Tests.RegisterTester" coverage="88" coveredlines="118" coverablelines="134" totallines="259" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    <Assembly name="Tests" classes="5" coverage="84.7" coveredlines="540" coverablelines="637" totallines="1095" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="Tests.HistoryTester" coverage="78.8" coveredlines="134" coverablelines="170" totallines="221" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests.LoginTester" coverage="100" coveredlines="115" coverablelines="115" totallines="241" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests.RecipeTester" coverage="98" coveredlines="51" coverablelines="52" totallines="88" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests.RegisterTester" coverage="100" coveredlines="116" coverablelines="116" totallines="282" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests.SearchTester" coverage="67.3" coveredlines="124" coverablelines="184" totallines="263" branchcoverage="" coveredbranches="0" totalbranches="0" />
     </Assembly>
   </Coverage>
 </CoverageReport>
