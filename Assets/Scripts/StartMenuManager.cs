@@ -124,7 +124,12 @@ public class StartMenuManager : MonoBehaviour
                 if(_data.state)
                     CloseRegisterForm();
                 else
-                    _errorMessage.PrintError("회원가입 실패");
+                {
+                    if(_data.desc == "중복ID오류")
+                        _errorMessage.PrintError("중복ID오류");
+                    else
+                        _errorMessage.PrintError("회원가입 실패");
+                }
             }
         }
     }
@@ -192,7 +197,7 @@ public class StartMenuManager : MonoBehaviour
             }
             else
             {
-                _errorMessage._text = "로그인 실패";
+                _errorMessage.PrintError("로그인 실패");
             }
             _requestProcessing = true;
         }
@@ -216,7 +221,7 @@ public class StartMenuManager : MonoBehaviour
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
-            Application.Quit() // 어플리케이션 종료
+            Application.Quit(); // 어플리케이션 종료
         #endif
     }
 }

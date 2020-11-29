@@ -140,7 +140,14 @@ namespace Tests
                 if(pair.Value == false)
                 {
                     Assert.IsFalse(manager._data.state);
-                    StringAssert.AreEqualIgnoringCase("회원가입 실패", manager._errorMessage._text);
+                    if(pair.Key != "hook")
+                    {
+                        StringAssert.AreEqualIgnoringCase("회원가입 실패", manager._errorMessage._text);
+                    }
+                    else
+                    {
+                        StringAssert.AreEqualIgnoringCase("중복ID오류", manager._errorMessage._text);
+                    }
                 }
                 else
                 {
