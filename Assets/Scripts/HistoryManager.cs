@@ -14,8 +14,6 @@ public class HistoryData
 
 public class HistoryManager : MonoBehaviour
 {
-    private static HistoryManager instance;
-
     public string _saveRecipeUrl = "hook.iptime.org:1080/saveRecipe.php";
     public string _loadRecipeSavedUrl = "hook.iptime.org:1080/loadRecipeSaved.php";
     public string _removeRecipeUrl = "hook.iptime.org:1080/removeRecipe.php";

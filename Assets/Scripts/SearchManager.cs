@@ -16,7 +16,6 @@ public enum SearchOption
 public class SearchManager : MonoBehaviour
 {
     public string _searchUrl;
-    public string _loadUrl;
     public TMP_InputField _keywordInput;
     public Dropdown _optionInput;
 

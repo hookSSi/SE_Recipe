@@ -19,6 +19,7 @@ public class RecipeDetailedInfoLoader : MonoBehaviour
 
     public void LoadRecipe(RecipeDetailedInfo info)
     {
+        Clear();
         _info = info;
 
         // 레시피 정보

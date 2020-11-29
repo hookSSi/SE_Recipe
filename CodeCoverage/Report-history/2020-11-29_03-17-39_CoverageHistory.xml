@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<coverage version="1.0" date="2020-11-29_03-17-39" tag="">
-  <assembly name="Tests">
-    <class name="Tests.HistoryTester" coveredlines="14" coverablelines="31" totallines="63" coveredbranches="0" totalbranches="0" />
-    <class name="Tests.LoginTester" coveredlines="0" coverablelines="123" totallines="225" coveredbranches="0" totalbranches="0" />
-    <class name="Tests.RegisterTester" coveredlines="27" coverablelines="134" totallines="259" coveredbranches="0" totalbranches="0" />
-    <class name="Tests.SearchTester" coveredlines="0" coverablelines="5" totallines="28" coveredbranches="0" totalbranches="0" />
-  </assembly>
-</coverage>

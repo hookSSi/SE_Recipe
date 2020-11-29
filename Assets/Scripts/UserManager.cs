@@ -5,12 +5,12 @@ public class UserManager : MonoBehaviour
 {
     private static UserManager instance;
 
-    [SerializeField] private string _userId;
+    [SerializeField] private string _userID;
     [SerializeField] private bool _loginState;
     
     private UserManager()
     {
-        _userId = "";
+        _userID = "";
         _loginState = false;
     }
 
@@ -44,7 +44,7 @@ public class UserManager : MonoBehaviour
     {
         if(!_loginState)
         {
-            _userId = userId;
+            _userID = userId;
             _loginState = true;
 
             if(!isTest)
@@ -56,11 +56,11 @@ public class UserManager : MonoBehaviour
     {
         if(_loginState)
         {
-            _userId = "";
+            _userID = "";
             _loginState = false;
         }
     }
 
-    public string GetID() { return _userId; }
+    public string GetID() { return _userID; }
     public bool GetLoginState() { return _loginState; }
 }
