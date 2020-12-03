@@ -71,7 +71,7 @@ namespace Tests
                 // 4자 미만의 아이디
                 // 로그인 실패
                 {"", false},
-                {"1", false},
+                {"2", false},
                 {"12", false},
                 {"123", false},
 
